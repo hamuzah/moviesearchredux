@@ -1,6 +1,7 @@
-import React from "react";
-import { createStore } from "redux";
-import { Provider, connect } from "react-redux";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
 
 // Initial State
 const initialState = {
@@ -8,23 +9,19 @@ const initialState = {
   movies: [
     {
       title: "The Godfather",
-      description:
-        "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      description: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
     },
     {
       title: "The Shawshank Redemption",
-      description:
-        "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      description: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
     },
     {
       title: "Schindler's List",
-      description:
-        "In German-occupied Poland during World War II, Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazi Germans.",
+      description: "In German-occupied Poland during World War II, Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazi Germans.",
     },
     {
       title: "Trapped",
-      description:
-        "A man struggles to survive after he unintentionally locks himself up in a high rise devoid of food, water and electricity.",
+      description: "A man struggles to survive after he unintentionally locks himself up in a high rise devoid of food, water and electricity.",
     },
   ],
 };
@@ -54,8 +51,8 @@ const movieReducer = (state = initialState, action) => {
 // Store
 const store = createStore(movieReducer);
 
-// App Component
-class App extends React.Component {
+// Movie Component
+class Movie extends React.Component {
   handleChange = (e) => {
     const searchTerm = e.target.value;
     this.props.searchMovie(searchTerm);
@@ -70,7 +67,11 @@ class App extends React.Component {
     return (
       <div>
         Enter the title to search Movie: &nbsp;
-        <input type="text" value={searchTerm} onChange={this.handleChange} />
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={this.handleChange}
+        />
         <ul>
           {filteredMovies.map((movie) => (
             <li key={movie.title}>
@@ -96,13 +97,12 @@ const mapDispatchToProps = {
 };
 
 // Connect component to Redux store
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+const ConnectedMovie = connect(mapStateToProps, mapDispatchToProps)(Movie);
 
 // Render the App
-const AppWrapper = () => (
+ReactDOM.render(
   <Provider store={store}>
-    <ConnectedApp />
-  </Provider>
+    <ConnectedMovie />
+  </Provider>,
+  document.getElementById('root')
 );
-
-export default AppWrapper;
